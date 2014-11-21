@@ -1,42 +1,30 @@
-## Put comments here that give an overall description of what your
-## functions do
-
-## Write a short comment describing this function
+## makeCacheMatrix is meant to create a special matrix given an input of a matrix. 
+#This special matrix should also cache the inverse of the given matrix.
+#Given that in the example the "vector" is actually a list of fuctions, the "matrix" will also be a list.
 
 makeCacheMatrix <- function(x = matrix()) {
-
+  m <- NULL
+  setinv <- function(y) m <<- y
+  getinv <- function() m
+  list(get = get <- function() x,
+       setinv = setinv,
+       getinv = getinv)
 }
 
-
-## Write a short comment describing this function
+#The second vector uses the previously identified functions to check if the matrix
+#has been solved. If yes, provides the inverse. If not, completes the computation.
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
-}
-
-
-makeVector <- function(x = numeric()) {
-  m <- NULL
-  set <- function(y) {
-    x <<- y
-    m <<- NULL
-  }
-  get <- function() x
-  setmean <- function(mean) m <<- mean
-  getmean <- function() m
-  list(set = set, get = get,
-       setmean = setmean,
-       getmean = getmean)
-}
-
-cachemean <- function(x, ...) {
-  m <- x$getmean()
+  m <- x$getinv()
   if(!is.null(m)) {
-    message("getting cached data")
+    message("retrieving data")
     return(m)
   }
+  else {
+    message("Computing the inverse")
   data <- x$get()
-  m <- mean(data, ...)
-  x$setmean(m)
+  m <- solve(data)
+  x$setinv(m)
   m
+  }
 }

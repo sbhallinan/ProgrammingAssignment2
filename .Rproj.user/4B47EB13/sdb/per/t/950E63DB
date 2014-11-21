@@ -1,12 +1,12 @@
 {
-    "contents" : "## Put comments here that give an overall description of what your\n## functions do\n\n## Write a short comment describing this function\n\nmakeCacheMatrix <- function(x = matrix()) {\n\n}\n\n\n## Write a short comment describing this function\n\ncacheSolve <- function(x, ...) {\n        ## Return a matrix that is the inverse of 'x'\n}\n\n\nmakeVector <- function(x = numeric()) {\n  m <- NULL\n  set <- function(y) {\n    x <<- y\n    m <<- NULL\n  }\n  get <- function() x\n  setmean <- function(mean) m <<- mean\n  getmean <- function() m\n  list(set = set, get = get,\n       setmean = setmean,\n       getmean = getmean)\n}\n\ncachemean <- function(x, ...) {\n  m <- x$getmean()\n  if(!is.null(m)) {\n    message(\"getting cached data\")\n    return(m)\n  }\n  data <- x$get()\n  m <- mean(data, ...)\n  x$setmean(m)\n  m\n}",
+    "contents" : "## makeCacheMatrix is meant to create a special matrix given an input of a matrix. \n#This special matrix should also cache the inverse of the given matrix.\n#Given that in the example the \"vector\" is actually a list of fuctions, the \"matrix\" will also be a list.\n\nmakeCacheMatrix <- function(x = matrix()) {\n  m <- NULL\n  setinv <- function(y) m <<- y\n  getinv <- function() m\n  list(get = get <- function() x,\n       setinv = setinv,\n       getinv = getinv)\n}\n\n#The second vector uses the previously identified functions to check if the matrix\n#has been solved. If yes, provides the inverse. If not, completes the computation.\n\ncacheSolve <- function(x, ...) {\n  m <- x$getinv()\n  if(!is.null(m)) {\n    message(\"retrieving data\")\n    return(m)\n  }\n  else {\n    message(\"Computing the inverse\")\n  data <- x$get()\n  m <- solve(data)\n  x$setinv(m)\n  m\n  }\n}",
     "created" : 1416252709682.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "1835635237",
+    "hash" : "4099708928",
     "id" : "950E63DB",
-    "lastKnownWriteTime" : 1416257211,
+    "lastKnownWriteTime" : 1416589805,
     "path" : "C:/Users/hallinan.s/ProgrammingAssignment2/cachematrix.R",
     "project_path" : "cachematrix.R",
     "properties" : {
